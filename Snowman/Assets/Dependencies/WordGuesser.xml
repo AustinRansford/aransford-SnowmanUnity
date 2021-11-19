@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WordGuesser</name>
+    </assembly>
+    <members>
+        <member name="T:WordGuesser.Config">
+            <summary>
+            This is a helper class which defines which classes to use
+            for Unit testing.
+            </summary>
+        </member>
+        <member name="M:WordGuesser.Config.GetWordSelector(System.String)">
+            <summary>
+            Returns an implementaiton of IWordSelector specifying a
+            path to a dictionary to use.
+            </summary>
+            <param name="path">The file path of the dictionary to use.</param>
+            <returns>An IWordSelector containing the words in the specified file.</returns>
+        </member>
+        <member name="M:WordGuesser.Config.GetWordSelector(System.String,System.Random)">
+            <summary>
+            Returns an implementaiton of IWordSelector specifying a
+            path to a dictionary to use and a Random number generator.
+            </summary>
+            <param name="path">The file path of the dictionary to use.</param>
+            <param name="random">A random number generator.</param>
+            <returns>An IWordSelector containing the words in the specified file and random number generator.</returns>
+        </member>
+        <member name="M:WordGuesser.Config.GetWordSelector(System.Collections.Generic.List{System.String},System.Random)">
+            <summary>
+            Returns an implementaiton of IWordSelector specifying a
+            non-empty dictionary to use and a Random number generator.
+            </summary>
+            <param name="dictionary">A non-empty list of words to use.</param>
+            <param name="random">A random number generator.</param>
+            <returns>An IWordSelector containing the words in the specified file and random number generator.</returns>
+        </member>
+        <member name="M:WordGuesser.Config.GetWordGame(System.String,System.Int32)">
+            <summary>
+            Returns an implementaiton of IWordGame specifying the word
+            that is being guessed and the number of incorrect guesses that can be made.
+            </summary>
+            <param name="wordToGuess">The word to guess.</param>
+            <param name="guessLimit">The number of incorrect guesses that can be made.</param>
+            <returns>An IWordGame.</returns>
+        </member>
+        <member name="T:WordGuesser.GuessingGame">
+            <summary>
+            This is a Driver Class for a simple Word Guessing Game.
+            </summary>
+        </member>
+        <member name="M:WordGuesser.GuessingGame.Play">
+            <summary>
+            This is the Entry Point for the Word Guessing Game.
+            </summary>
+        </member>
+        <member name="T:WordGuesser.Program">
+            <summary>
+            This class contains the Entry Point for running this project in the console.
+            </summary>
+        </member>
+        <member name="M:WordGuesser.Program.Main">
+            <summary>
+            The Entry Point of the entire project.
+            </summary>
+        </member>
+        <member name="T:WordGuesser.IWordGame">
+            <summary>
+            A WordFilter specifies a predicate method IsValid which returns true
+            if the specified word meets the criteria for this WordFilter.
+            </summary>
+        </member>
+        <member name="M:WordGuesser.IWordGame.IsGameWon">
+            <summary>
+            Checks if this game has been won. A game is considered won if
+            all of the letters in the word to be guessed have been guessed.
+            </summary>
+            <returns>true if the game has been one and false otherwise.</returns>
+        </member>
+        <member name="M:WordGuesser.IWordGame.IsGameOver">
+            <summary>
+            Checks if the game has been lost. A game is considered lost if
+            the number of incorrect guesses is greater than or equal to the
+            guess limit.
+            </summary>
+            <returns>true if the game has been lost and false otherwise.</returns>
+        </member>
+        <member name="M:WordGuesser.IWordGame.GetIncorrectGuesses">
+            <summary>
+            Returns the number of incorrect guesses.
+            </summary>
+            <returns>The number of incorrect guesses.</returns>
+        </member>
+        <member name="M:WordGuesser.IWordGame.GetGuessLimit">
+            <summary>
+            Returns the guess limit.
+            </summary>
+            <returns>The guess limit.</returns>
+        </member>
+        <member name="M:WordGuesser.IWordGame.CheckGuess(System.String)">
+            <summary>
+            Checks a users guess and returns a string message informing them of the result and updating the game state as necessary.<br/>
+            1. The guess is sanitized such that the case, preceding, and trailing white space are ignored.<br/>
+            2. If the length of the sanitized input is not 1 character, returns "You must guess a single letter".<br/>
+            3. If the character is not a letter, returns "You can only guess letters"<br/>
+            4. If the letter guessed has been previously guessed, returns "You've already guessed {guess}"<br/>
+            5. If the letter has not been previously guessed, it is added to the list of guessed letters.
+            6. If the letter is not part of the word to be guessed, the number of incorrect guesses increments by 1 and then returns "Ouch! No {guess}s"<br/>
+            7. If the guessed letter appears in the word once, returns "There is 1 {guess}".<br/>
+            8. If the letter is correct and appears multiple times, returns "There are {count} {guess}s".<br/>
+            </summary>
+            <param name="guess">The player's guess.</param>
+            <returns>A message informing them of the result.</returns>
+        </member>
+        <member name="M:WordGuesser.IWordGame.CountLetter(System.Char)">
+            <summary>
+            Counts the number of times the specified character appears in the word to be guessed.
+            The case of the letter specified is ignored.
+            </summary>
+            <param name="guess">The guess to check.</param>
+            <exception cref="T:System.ArgumentException">Thrown if the specified guess is not a letter.</exception>
+            <returns>The number of times the specified character appears in the word to be guessed.</returns>
+        </member>
+        <member name="M:WordGuesser.IWordGame.GetGuessedLetters">
+            <summary>
+            Returns a string containing each letter that has been guessed in the order that they were guessed.
+            </summary>
+            <returns>A string containing each letter that has been guessed.</returns>
+        </member>
+        <member name="M:WordGuesser.IWordGame.GetFullWord">
+            <summary>
+            Returns the word that is to be guessed without any missing letters.
+            </summary>
+            <returns>The word that is being guessed.</returns>
+        </member>
+        <member name="M:WordGuesser.IWordGame.GetWord">
+            <summary>
+            Returns the word that is to be guessed with each letter that has
+            not yet been guessed replaced with an underscore.
+            </summary>
+            <returns>The word that is to be guessed with hidden letters.</returns>
+        </member>
+        <member name="T:WordGuesser.IWordSelector">
+            <summary>
+            A class for generating random words.
+            </summary>
+        </member>
+        <member name="M:WordGuesser.IWordSelector.GetDictionary(WordGuesser.IWordFilter[])">
+            <summary>
+            Generates a list of words that match the specified WordFilters.
+            </summary>
+            <param name="filters">The word filters to use.</param>
+            <returns>A list of words matching the filter.</returns>
+            <exception cref="T:System.ArgumentException">Thrown if the specified filters result in no words being available.</exception>
+        </member>
+        <member name="M:WordGuesser.IWordSelector.GetWord(WordGuesser.IWordFilter[])">
+            <summary>
+            Gets a random word from this WordSelector using the specified filters.
+            </summary>
+            <param name="filters">A list of filters to use for word selection.</param>
+            <returns>A random word from that matches the specified filters.</returns>
+            <exception cref="T:System.ArgumentException">Thrown if the specified filters result in no words being available.</exception>
+        </member>
+        <member name="T:WordGuesser.IWordFilter">
+            <summary>
+            A WordFilter specifies a predicate method IsValid which returns true
+            if the specified word meets the criteria for this WordFilter.
+            </summary>
+        </member>
+        <member name="M:WordGuesser.IWordFilter.IsValid(System.String)">
+            <summary>
+            Checks to see if a word meets the criteria of this WordFilter.
+            </summary>
+            <param name="word">The word to check.</param>
+            <returns>true if the word is valid and false otherwise.</returns>
+        </member>
+        <member name="T:WordGuesser.WordSelector">
+            <summary>
+            A class for generating random words.
+            </summary>
+        </member>
+        <member name="M:WordGuesser.WordSelector.LoadFromString(System.String)">
+            <summary>
+            Given a string, splits it on white space and uses the resulting
+            words as a dictionary.
+            </summary>
+            <param name="toLoad">The string of words to use.</param>
+            <returns>A WordSelector with the specified dictionary.</returns>
+        </member>
+        <member name="M:WordGuesser.WordSelector.#ctor(System.String)">
+            <summary>
+            Initializes an instance of the WordSelector class specifying the path to a
+            file containing the words that are possible.
+            </summary>
+            <param name="path">A path to a file containing words.</param>
+        </member>
+        <member name="M:WordGuesser.WordSelector.#ctor(System.Collections.Generic.List{System.String},System.Random)">
+            <summary>
+            Initializes an instance of the WordSelector class specifying a list of strings
+            to use as a dictionary and the random generator to use.
+            </summary>
+            <param name="dictionary">A list of words to use in the dictionary.</param>
+            <param name="generator">A random generator.</param>
+        </member>
+        <member name="M:WordGuesser.WordSelector.#ctor(System.String,System.Random)">
+            <summary>
+            Initializes an instance of the WordSelector class specifying the path to
+            a file containing the words and the random generator to use.
+            </summary>
+            <param name="path">A path to a file containing words.</param>
+            <param name="generator">The random generator to use.</param>
+        </member>
+        <member name="M:WordGuesser.WordSelector.GetDictionary(WordGuesser.IWordFilter[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:WordGuesser.WordSelector.GetWord(WordGuesser.IWordFilter[])">
+            <inheritdoc/>
+        </member>
+        <member name="T:Examples.StringAnalyzer">
+            <summary>
+            A StringAnalyzer provides methods for analyzing strings.
+            </summary>
+        </member>
+        <member name="M:Examples.StringAnalyzer.#ctor(System.String)">
+            <summary>
+            Initializes an instance of the Stringanalyzer class specifying the string to be analyzed.
+            </summary>
+            <param name="toAnalyze">The string to be analyzed.</param>
+        </member>
+        <member name="M:Examples.StringAnalyzer.RunExample(System.String)">
+            <summary>
+            An example usage of the StringAnalyzer.
+            This method creates a new instance of the string analyzer and runs each of its methods.
+            If the string being analyzed is an integer, the AsInteger() method is run.
+            </summary>
+            <param name="toAnalyze">The string to be analyzed.</param>
+        </member>
+        <member name="M:Examples.StringAnalyzer.IsInteger">
+            <summary>
+            Checks to see if the string being analyzed is a non-negative Integer.
+            </summary>
+            <returns>true if the string is a non-negative integer, otherwise returns false.</returns>
+        </member>
+        <member name="M:Examples.StringAnalyzer.AsInteger">
+            <summary>
+            Returns a non-negative integer of the string being analyzed.
+            </summary>
+            <exception cref="T:System.Exception">If the string being analyzed is not an integer an Exception is raised.</exception>
+            <returns>The parsed integer.</returns>
+        </member>
+        <member name="M:Examples.StringAnalyzer.CountDigits">
+            <summary>
+            Counts the number of digits in the string being analyzed.
+            </summary>
+            <returns>The number of times a digit appears in the string being analzyed.</returns>
+        </member>
+        <member name="M:Examples.StringAnalyzer.HasLetter">
+            <summary>
+            Checks if the string being analyzed contains at least 1 letter.
+            </summary>
+            <returns>true if the string being analyzed contains at least 1 letter and false otherwise.</returns>
+        </member>
+    </members>
+</doc>
