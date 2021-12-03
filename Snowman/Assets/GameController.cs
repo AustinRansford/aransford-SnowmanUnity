@@ -19,23 +19,42 @@ public UnityEngine.UI.Text Fullword;
     public UnityEngine.UI.Text hiddenWord;
     public UnityEngine.UI.Text getGuessedLetterstext;
     public UnityEngine.UI.Text checkGuess;
+     
 
 
     public void StartGame() 
     {
-        this.GuessingGame = new WordGuesser.WordGame("apple", 8);
+        this.GuessingGame = new WordGuesser.WordGame("apple", 4);
         Debug.Log(this.GuessingGame.GetWord());
         Debug.Log(this.GuessingGame.GetFullWord());
+               hiddenWord.text = this.GuessingGame.CheckGuess(PlayerGuess.text);
+
+        PlayerGuess.text = string.Empty;
+        getWordtext.text = this.GuessingGame.GetWord();
+        int remaining = this.GuessingGame.GetGuessLimit() - this.GuessingGame.GetIncorrectGuesses();
+        remaining2.text = $"Remaining Guesses: {remaining}"; 
+
+        getGuessedLetterstext.text = $"Guessed Letters: {this.GuessingGame.GetGuessedLetters()}";
 
         this.StartScreen.SetActive(false);
         this.PlayScreen.SetActive(true);
         this.GameOverScreen.SetActive(false);
+         this.GameWonScreen.SetActive(false);
 
     }
-    public void OpenStartScreen()
+    public void IsGameOver1()
     {
-        this.StartScreen.SetActive(true);
+       Fullword.text = $"The Word You Tried To Guess Was: {this.GuessingGame.GetFullWord()}";
+       this.GameWonScreen.SetActive(false);
+        this.GameOverScreen.SetActive(true);
         this.PlayScreen.SetActive(false);
+        this.StartScreen.SetActive(false);
+    }
+    public void IsGameWon1()
+    {
+      this.GameWonScreen.SetActive(true);
+        this.PlayScreen.SetActive(false);
+        this.StartScreen.SetActive(false);
         this.GameOverScreen.SetActive(false);
     }
     public void SubmitGuess()
@@ -46,34 +65,18 @@ public UnityEngine.UI.Text Fullword;
         PlayerGuess.text = string.Empty;
         getWordtext.text = this.GuessingGame.GetWord();
         int remaining = this.GuessingGame.GetGuessLimit() - this.GuessingGame.GetIncorrectGuesses();
-        remaining2.text = $"Rem: {remaining}"; 
+        remaining2.text = $"Remaining Guesses: {remaining}"; 
 
-        getGuessedLetterstext.text = this.GuessingGame.GetGuessedLetters();
-
-        if(this.GuessingGame.IsGameOver())
-        {
-            this.IsGameOver1();
-        }
-        else if (this.GuessingGame.IsGameWon())
+         getGuessedLetterstext.text = $"Guessed Letters: {this.GuessingGame.GetGuessedLetters()}";
+        if (this.GuessingGame.IsGameWon())
         {
             this.IsGameWon1();
         }
+        else if(this.GuessingGame.IsGameOver())
+        {
+            this.IsGameOver1();
+        }
+       
 
-    }
-    public void IsGameOver1()
-    {
-
-      this.GameWonScreen.SetActive(false);
-        this.GameOverScreen.SetActive(true);
-        this.PlayScreen.SetActive(false);
-        this.StartScreen.SetActive(false);
-    }
-    public void IsGameWon1()
-    {
-        Fullword.text = this.GuessingGame.GetFullWord();
-      this.GameWonScreen.SetActive(true);
-        this.PlayScreen.SetActive(false);
-        this.StartScreen.SetActive(false);
-        this.GameOverScreen.SetActive(false);
     }
 }
