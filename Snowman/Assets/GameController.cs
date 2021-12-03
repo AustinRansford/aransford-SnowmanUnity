@@ -21,7 +21,7 @@ public UnityEngine.UI.Text Fullword;
     public UnityEngine.UI.Text checkGuess;
      
 
-
+ 
     public void StartGame() 
     {
         this.GuessingGame = new WordGuesser.WordGame("apple", 4);
